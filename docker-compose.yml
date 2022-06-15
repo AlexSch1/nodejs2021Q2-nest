@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  express:
+    restart: always
+    build: .
+    command: sh -c './wait-for postgres:${DB_PORT} -- npm run start:docker'
+    image: yuskivpm/rss-2021q2-nodejs:express_v1.0
+    ports:
+      - ${HOST_PORT}:${CONTAINER_PORT}
+    depends_on:
+      - ${DB_TYPE}
+    env_file:
+      - .env
+    volumes:
+      - ./src:/usr/express/app/src
+      - /usr/express/app/node_modules/
+      - ${LOG_FOLDER}:/usr/express/app/logs
+    networks:
+      users:
+
+  postgres:
+    container_name: ${DB_HOST}
+    restart: always
+    build: ./database/
+    image: yuskivpm/rss-2021q2-nodejs:postgres_v1.0
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    command: -p ${DB_PORT}
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - ${DB_PATH}:${PGDATA}
+    networks:
+      users:
+        aliases:
+          - postgres
+
+networks:
+  users:
+    driver: bridge

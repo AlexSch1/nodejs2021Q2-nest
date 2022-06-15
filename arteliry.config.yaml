@@ -1,0 +1,12 @@
+config:
+  target: http://localhost:4000
+  phases:
+    - duration: 600
+      arrivalRate: 10
+  defaults:
+    headers:
+      authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1NTQ5ZTRjNS02ODhmLTQ3M2ItODZjYS1mYzRhOGRhNDNhN2MiLCJsb2dpbiI6ImFkbWluIiwiaWF0IjoxNjI1MzQ0NTg5LCJleHAiOjE2MjUzNDgxODl9.9tasCJO_MwInyGtoZn4W2PWkFDPg1iTrC8dw9pzylNc'
+scenarios:
+  - flow:
+      - get:
+          url: '/users'

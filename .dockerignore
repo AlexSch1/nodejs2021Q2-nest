@@ -1,0 +1,11 @@
+**/.git
+**/.vscode
+**/docker-compose*
+**/Dockerfile*
+*.txt
+node_modules
+out
+.env
+build
+logs
+pgdata
